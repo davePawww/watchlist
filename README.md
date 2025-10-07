@@ -1,6 +1,6 @@
 # Setup the following:
 
-- [ ] tanstack router
+- [x] tanstack router
 - [ ] tanstack query
 - [ ] rtk
 - [ ] rtk toolkit

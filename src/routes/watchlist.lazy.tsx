@@ -1,10 +1,9 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 
-export const Route = createLazyFileRoute("/")({
+export const Route = createLazyFileRoute("/watchlist")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  // This will load the Dashboard component
-  return <div>Hello "/"!</div>;
+  return <div>Hello "/watchlist"!</div>;
 }

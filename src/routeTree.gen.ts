@@ -12,8 +12,22 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
 
+const WatchlistLazyRouteImport = createFileRoute('/watchlist')()
+const BitcoinAnalysisLazyRouteImport = createFileRoute('/bitcoinAnalysis')()
 const IndexLazyRouteImport = createFileRoute('/')()
 
+const WatchlistLazyRoute = WatchlistLazyRouteImport.update({
+  id: '/watchlist',
+  path: '/watchlist',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/watchlist.lazy').then((d) => d.Route))
+const BitcoinAnalysisLazyRoute = BitcoinAnalysisLazyRouteImport.update({
+  id: '/bitcoinAnalysis',
+  path: '/bitcoinAnalysis',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/bitcoinAnalysis.lazy').then((d) => d.Route),
+)
 const IndexLazyRoute = IndexLazyRouteImport.update({
   id: '/',
   path: '/',
@@ -22,28 +36,50 @@ const IndexLazyRoute = IndexLazyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '/bitcoinAnalysis': typeof BitcoinAnalysisLazyRoute
+  '/watchlist': typeof WatchlistLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '/bitcoinAnalysis': typeof BitcoinAnalysisLazyRoute
+  '/watchlist': typeof WatchlistLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexLazyRoute
+  '/bitcoinAnalysis': typeof BitcoinAnalysisLazyRoute
+  '/watchlist': typeof WatchlistLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/bitcoinAnalysis' | '/watchlist'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/bitcoinAnalysis' | '/watchlist'
+  id: '__root__' | '/' | '/bitcoinAnalysis' | '/watchlist'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
+  BitcoinAnalysisLazyRoute: typeof BitcoinAnalysisLazyRoute
+  WatchlistLazyRoute: typeof WatchlistLazyRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/watchlist': {
+      id: '/watchlist'
+      path: '/watchlist'
+      fullPath: '/watchlist'
+      preLoaderRoute: typeof WatchlistLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bitcoinAnalysis': {
+      id: '/bitcoinAnalysis'
+      path: '/bitcoinAnalysis'
+      fullPath: '/bitcoinAnalysis'
+      preLoaderRoute: typeof BitcoinAnalysisLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -56,6 +92,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  BitcoinAnalysisLazyRoute: BitcoinAnalysisLazyRoute,
+  WatchlistLazyRoute: WatchlistLazyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
