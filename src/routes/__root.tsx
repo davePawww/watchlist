@@ -11,11 +11,17 @@ function RootComponent() {
   return (
     <>
       <Header />
-      <main className="flex min-h-screen flex-col items-center justify-center">
+      <Separator />
+      <main className="container mx-auto flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center border-r border-l border-dashed p-4">
         <Outlet />
       </main>
+      <Separator />
       <Footer />
       <TanStackRouterDevtools />
     </>
   );
 }
+
+const Separator = () => {
+  return <div className="border-t border-dashed" />;
+};
