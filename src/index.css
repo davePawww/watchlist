@@ -118,3 +118,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+*,
+html,
+body {
+  font-family: "JetBrains Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
