@@ -11,7 +11,7 @@ function RootComponent() {
   return (
     <>
       <Header />
-      <main>
+      <main className="flex min-h-screen flex-col items-center justify-center">
         <Outlet />
       </main>
       <Footer />
